@@ -7,8 +7,8 @@ const router = express.Router();
 
 router.get("/", postController.get);
 router.get("/:id", postController.getOne);
-router.post("/", postController.post);
-router.delete("/:id", postController.delete);
-router.put("/:id", postController.put);
+router.post("/", authMiddleware, postController.post);
+router.delete("/:id", authMiddleware, authorMiddleware, postController.delete);
+router.put("/:id", authMiddleware, authorMiddleware, postController.put);
 
 module.exports = router;

@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
     const post = await postModel.findById(req.params.id);
     const authorId = req.user.id;
 
-    if (post.author !== authorId) {
+    if (post.author.toString() !== authorId.toString()) {
       return next(
         BaseError.BadRequestError("Only author can control this post")
       );

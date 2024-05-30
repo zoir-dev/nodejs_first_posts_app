@@ -26,9 +26,17 @@ class PostController {
 
   async post(req, res, next) {
     try {
-      const post = await postService.post(req.body, req.files.img);
+      req.body.author = req.user.id;
+
+      if (!req.files) {
+        throw new Error("Image is required");
+      }
+
+      console.log(req.files);
+      const post = await postService.post(req.body, req.files.img, req.user.id);
       res.status(200).json(post);
     } catch (error) {
+      console.log(error);
       next(BaseError.BadRequestError(error.message));
     }
   }
